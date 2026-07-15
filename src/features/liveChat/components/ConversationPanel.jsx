@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { navigate } from "../../../router/navigation";
 import { avatarColor, initials, statusConfigFor } from "../conversationDisplay";
-import { ChatIcon } from "../../../layouts/navIcons";
+import { ChatIcon, ChevronLeftIcon } from "../../../layouts/navIcons";
 import {
   AlertIcon,
   ClockIcon,
@@ -136,6 +136,7 @@ export function ConversationPanel({
   onRetryMessage,
   onSendAttachment,
   onTypingChange,
+  onBack,
   isSending,
   isCustomerTyping,
   isSupervisor,
@@ -278,6 +279,17 @@ export function ConversationPanel({
     <div className="flex h-full min-h-0 flex-col rounded-lg border border-brand-gray/15 bg-white shadow-[0_14px_35px_rgba(17,45,95,0.05)]">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-brand-gray/12 px-5 py-4">
         <div className="flex items-center gap-3">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className="grid size-9 shrink-0 place-items-center rounded-lg text-brand-gray transition hover:bg-brand-gray/6 lg:hidden"
+              aria-label="العودة إلى قائمة المحادثات"
+            >
+              <ChevronLeftIcon className="size-5 rotate-180" />
+            </button>
+          ) : null}
+
           <div className={`grid size-10 shrink-0 place-items-center rounded-full text-xs font-black ${avatarColor(conversation.visitor_name)}`}>
             {initials(conversation.visitor_name)}
           </div>

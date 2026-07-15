@@ -299,6 +299,15 @@ export function LiveChatPage({ conversationIdFromUrl }) {
     dispatch(convertSelectedConversationToTicket(selectedId))
   }, [dispatch, selectedId])
 
+  // Mobile/tablet only - on lg+ the list and panel show side by side, so
+  // there's nothing to "go back" from. Below lg, only one of them is
+  // visible at a time (see the max-lg:hidden classes below); this returns
+  // to the list view.
+  const handleBackToList = useCallback(() => {
+    dispatch(conversationSelected(null))
+    window.history.replaceState({}, '', '/live-chat')
+  }, [dispatch])
+
   return (
     <div dir="rtl" className="flex h-[calc(100vh-220px)] min-h-130 flex-col gap-4">
       <div className="flex items-center justify-between gap-4 rounded-lg border border-brand-gray/15 bg-white px-5 py-4 shadow-[0_10px_30px_rgba(17,45,95,0.06)] max-sm:flex-col max-sm:items-stretch">
@@ -330,7 +339,10 @@ export function LiveChatPage({ conversationIdFromUrl }) {
       ) : null}
 
       <div dir="ltr" className="grid min-h-0 flex-1 grid-cols-[340px_1fr] gap-4 max-lg:grid-cols-1">
-        <div dir="rtl" className="min-h-0 max-lg:h-80">
+        {/* Below lg, only the list or the open conversation is shown at a
+            time (not both squeezed together) - which one depends on
+            whether a conversation is selected. */}
+        <div dir="rtl" className={`min-h-0 ${selectedId ? 'max-lg:hidden' : ''}`}>
           <ConversationList
             conversations={filteredConversations}
             isLoading={conversationsStatus === 'loading'}
@@ -348,7 +360,7 @@ export function LiveChatPage({ conversationIdFromUrl }) {
           />
         </div>
 
-        <div dir="rtl" className="min-h-0">
+        <div dir="rtl" className={`min-h-0 ${selectedId ? '' : 'max-lg:hidden'}`}>
           <ConversationPanel
             conversation={selectedConversation}
             messages={messages}
@@ -360,6 +372,7 @@ export function LiveChatPage({ conversationIdFromUrl }) {
             onConvertToTicket={handleConvertToTicket}
             onSendAttachment={handleSendAttachment}
             onTypingChange={handleTypingChange}
+            onBack={handleBackToList}
             isSending={isSending}
             isCustomerTyping={isCustomerTyping}
             isSupervisor={isSupervisor}

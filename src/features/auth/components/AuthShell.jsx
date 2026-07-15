@@ -1,3 +1,4 @@
+import logoColor from '../../../assets/logo-color.png'
 import { navigate } from '../../../router/navigation'
 
 export function AuthShell({ children, variant = 'split' }) {
@@ -90,28 +91,13 @@ function BackButton() {
 
 export function Logo({ compact = false }) {
   const wrapperClass = compact
-    ? 'inline-flex items-center gap-2.5 text-brand-gray no-underline [direction:ltr]'
-    : 'absolute top-9 left-9 z-10 inline-flex items-center gap-2.5 text-brand-gray no-underline [direction:ltr] max-lg:top-6 max-lg:left-6 max-sm:top-4 max-sm:left-4'
-  const markClass = compact
-    ? 'grid size-11 place-items-center rounded-[8px_16px_8px_16px] bg-linear-to-br from-brand-accent via-brand-primary to-brand-navy text-3xl leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)]'
-    : 'grid size-[58px] place-items-center rounded-[8px_20px_8px_20px] bg-linear-to-br from-brand-accent via-brand-primary to-brand-navy text-[42px] leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)] max-sm:size-10 max-sm:text-3xl'
-  const textClass = compact
-    ? 'grid gap-0.5 text-left tracking-[5px]'
-    : 'grid gap-1 text-left tracking-[8px] max-sm:tracking-[5px]'
-  const strongClass = compact
-    ? 'text-[22px] leading-none font-bold'
-    : 'text-[34px] leading-none font-bold max-sm:text-[22px]'
-  const smallClass = compact
-    ? 'inline-flex items-center justify-center gap-2 text-[11px] leading-none font-bold before:h-0.5 before:w-6 before:bg-brand-gray after:h-0.5 after:w-6 after:bg-brand-gray'
-    : 'inline-flex items-center justify-center gap-2 text-[17px] leading-none font-bold before:h-0.5 before:w-12 before:bg-brand-gray after:h-0.5 after:w-12 after:bg-brand-gray max-sm:text-[11px] max-sm:before:w-6 max-sm:after:w-6'
+    ? 'inline-flex items-center text-brand-gray no-underline'
+    : 'absolute top-9 left-9 z-10 inline-flex items-center text-brand-gray no-underline max-lg:top-6 max-lg:left-6 max-sm:top-4 max-sm:left-4'
+  const imgClass = compact ? 'h-14 w-auto' : 'h-24 w-auto max-sm:h-16'
 
   return (
     <a className={wrapperClass} href="/login" aria-label="ESAMCO Group">
-      <span className={markClass}>E</span>
-      <span className={textClass}>
-        <strong className={strongClass}>ESAMCO</strong>
-        <small className={smallClass}>GROUP</small>
-      </span>
+      <img src={logoColor} alt="ESAMCO Group" className={imgClass} />
     </a>
   )
 }

@@ -1,4 +1,5 @@
 import { useAppSelector } from '../app/hooks'
+import logoSidebar from '../assets/logo-sidebar.png'
 import { selectLiveChatUnreadTotal } from '../features/liveChat/liveChatSlice'
 import { navigate, navItemsForRole } from '../router/navigation'
 import { ChevronLeftIcon, LogoutIcon } from './navIcons'
@@ -29,14 +30,8 @@ export function Sidebar({ currentPath, isOpen, onClose, onLogout }) {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-center gap-2.5 px-6 py-8">
-          <span className="grid size-11 place-items-center rounded-[8px_16px_8px_16px] bg-linear-to-br from-brand-accent via-brand-primary to-brand-navy text-2xl leading-none font-black">
-            E
-          </span>
-          <span className="grid gap-0.5 text-left tracking-[3px] [direction:ltr]">
-            <strong className="text-lg leading-none font-black">ESAMCO</strong>
-            <small className="text-[10px] leading-none font-bold text-white/50">GROUP</small>
-          </span>
+        <div className="flex items-center justify-center px-6 py-8">
+          <img src={logoSidebar} alt="ESAMCO Group" className="h-10 w-auto" />
         </div>
 
         <div className="mx-5 mb-3 h-px bg-white/10" />
