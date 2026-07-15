@@ -1,6 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
-function getToken() {
+export function getToken() {
   return localStorage.getItem('auth_token')
 }
 
@@ -18,9 +18,12 @@ function getValidationMessage(payload, fallback) {
 
 export async function request(path, options = {}) {
   const token = getToken()
+  // Leave Content-Type unset for FormData - the browser fills in the
+  // multipart boundary itself, which we can't replicate by hand.
+  const isFormData = options.body instanceof FormData
   const headers = {
     Accept: 'application/json',
-    ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+    ...(options.body && !isFormData ? { 'Content-Type': 'application/json' } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers,
   }
@@ -29,7 +32,7 @@ export async function request(path, options = {}) {
     ...options,
     headers,
     credentials: 'include',
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: isFormData ? options.body : options.body ? JSON.stringify(options.body) : undefined,
   })
 
   const payload = await response.json().catch(() => null)

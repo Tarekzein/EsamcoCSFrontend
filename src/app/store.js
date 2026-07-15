@@ -2,19 +2,29 @@ import { configureStore, createListenerMiddleware, isAnyOf } from '@reduxjs/tool
 import { createElement } from 'react'
 import { Provider } from 'react-redux'
 import authReducer, {
-  loggedOut,
+  loadCurrentUser,
+  logoutUser,
   loginUser,
   requestPasswordReset,
   submitNewPassword,
+  toggleOnlineStatus,
   verifyOtp,
 } from '../features/auth/authSlice'
+import auditLogsReducer from '../features/auditLogs/auditLogsSlice'
+import customersReducer from '../features/customers/customersSlice'
+import dashboardsReducer from '../features/dashboards/dashboardsSlice'
+import departmentsReducer from '../features/departments/departmentsSlice'
+import liveChatReducer from '../features/liveChat/liveChatSlice'
+import usersReducer from '../features/users/usersSlice'
 
 const authPersistenceMiddleware = createListenerMiddleware()
 
 authPersistenceMiddleware.startListening({
   matcher: isAnyOf(
     loginUser.fulfilled,
-    loggedOut,
+    loadCurrentUser.fulfilled,
+    toggleOnlineStatus.fulfilled,
+    logoutUser.fulfilled,
     requestPasswordReset.fulfilled,
     verifyOtp.fulfilled,
     submitNewPassword.fulfilled
@@ -27,7 +37,11 @@ authPersistenceMiddleware.startListening({
       localStorage.setItem('auth_user', JSON.stringify(auth.user))
     }
 
-    if (loggedOut.match(action)) {
+    if (loadCurrentUser.fulfilled.match(action) || toggleOnlineStatus.fulfilled.match(action)) {
+      localStorage.setItem('auth_user', JSON.stringify(auth.user))
+    }
+
+    if (logoutUser.fulfilled.match(action)) {
       localStorage.removeItem('auth_token')
       localStorage.removeItem('auth_user')
     }
@@ -53,6 +67,12 @@ authPersistenceMiddleware.startListening({
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    dashboards: dashboardsReducer,
+    liveChat: liveChatReducer,
+    users: usersReducer,
+    departments: departmentsReducer,
+    auditLogs: auditLogsReducer,
+    customers: customersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(authPersistenceMiddleware.middleware),

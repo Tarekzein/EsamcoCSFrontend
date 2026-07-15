@@ -39,3 +39,14 @@ export function resetPassword({ password, passwordConfirmation }) {
 export function fetchCurrentUser() {
   return request('/auth/me')
 }
+
+export function logout() {
+  return request('/auth/logout', { method: 'POST' })
+}
+
+export function updateOwnOnlineStatus(isOnline) {
+  return request('/users/me/online-status', {
+    method: 'PATCH',
+    body: { is_online: isOnline },
+  })
+}

@@ -6,7 +6,7 @@ import {
   FieldError,
   FormAlert,
   MailIllustration,
-} from '../../features/auth/AuthShell'
+} from '../../features/auth/components/AuthShell'
 import { requestPasswordReset, verifyOtp } from '../../features/auth/authSlice'
 
 const RESEND_COOLDOWN_SECONDS = 30
@@ -108,32 +108,32 @@ export function VerifyPage() {
           <span className="mx-auto w-fit rounded-full bg-emerald-50 px-3 py-1 text-sm font-black text-emerald-700">
             التحقق من الهوية
           </span>
-          <h1 className="m-0 text-[34px] leading-tight font-black text-[#101828] max-sm:text-[28px]">
+          <h1 className="m-0 text-[34px] leading-tight font-black text-brand-navy max-sm:text-[28px]">
             تم إرسال الكود!
           </h1>
-          <p className="m-0 text-base leading-7 font-semibold text-[#667085]">
+          <p className="m-0 text-base leading-7 font-semibold text-brand-gray">
             أدخل الكود المكون من 6 أرقام الذي أرسلناه إلى بريدك الإلكتروني.
           </p>
-          <strong className="rounded-lg border border-[#e5eaf1] bg-[#f8fafc] px-3 py-2 text-base text-[#344054]">
+          <strong className="rounded-lg border border-brand-gray/15 bg-brand-gray/6 px-3 py-2 text-base text-brand-gray">
             {email || 'بريدك الإلكتروني'}
           </strong>
         </div>
 
         <div className="grid gap-2 text-right">
           <div className="flex items-center justify-between">
-            <label className="text-base font-black text-[#344054]" htmlFor="otp">
+            <label className="text-base font-black text-brand-gray" htmlFor="otp">
               كود التحقق
             </label>
             {otpExpiresAt ? (
               <span
-                className={`text-sm font-black ${isExpired ? 'text-[#e02424]' : 'text-[#667085]'}`}
+                className={`text-sm font-black ${isExpired ? 'text-red-600' : 'text-brand-gray'}`}
               >
                 {isExpired ? 'انتهت صلاحية الكود' : `ينتهي الكود خلال ${formatDuration(secondsLeft)}`}
               </span>
             ) : null}
           </div>
           <input
-            className="min-h-14 w-full rounded-lg border border-[#d0d5dd] bg-white px-4 text-center text-2xl font-black tracking-[0.45em] text-[#101828] outline-none transition placeholder:text-right placeholder:text-base placeholder:font-semibold placeholder:tracking-normal placeholder:text-[#98a2b3] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10"
+            className="min-h-14 w-full rounded-lg border border-brand-gray/25 bg-white px-4 text-center text-2xl font-black tracking-[0.45em] text-brand-navy outline-none transition placeholder:text-right placeholder:text-base placeholder:font-semibold placeholder:tracking-normal placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
             id="otp"
             name="otp"
             inputMode="numeric"
@@ -152,7 +152,7 @@ export function VerifyPage() {
 
         <button
           type="submit"
-          className="min-h-14 rounded-lg border-0 bg-[#1c55b6] px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-[#0c3d94] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c55b6] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+          className="min-h-14 rounded-lg border-0 bg-brand-primary px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
           disabled={isSubmitting || isExpired}
         >
           {isSubmitting ? 'جاري التحقق...' : 'إدخال'}
@@ -164,7 +164,7 @@ export function VerifyPage() {
           لم تستلم الكود؟{' '}
           <button
             type="button"
-            className="border-0 bg-transparent p-0 font-black text-[#1c55b6] underline transition hover:text-[#0c3d94] disabled:cursor-not-allowed disabled:text-[#98a2b3] disabled:no-underline"
+            className="border-0 bg-transparent p-0 font-black text-brand-primary underline transition hover:text-brand-navy disabled:cursor-not-allowed disabled:text-brand-gray/60 disabled:no-underline"
             onClick={handleResend}
             disabled={isResending || cooldown > 0}
           >

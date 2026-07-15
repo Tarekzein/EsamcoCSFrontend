@@ -6,7 +6,7 @@ import {
   FieldError,
   FormAlert,
   MailIllustration,
-} from '../../features/auth/AuthShell'
+} from '../../features/auth/components/AuthShell'
 import { requestPasswordReset } from '../../features/auth/authSlice'
 
 export function ForgotPasswordPage() {
@@ -42,23 +42,23 @@ export function ForgotPasswordPage() {
       >
         <MailIllustration />
         <div className="grid gap-3 text-center">
-          <span className="mx-auto w-fit rounded-full bg-[#eef4ff] px-3 py-1 text-sm font-black text-[#1c55b6]">
+          <span className="mx-auto w-fit rounded-full bg-brand-accent/10 px-3 py-1 text-sm font-black text-brand-primary">
             استعادة الحساب
           </span>
-          <h1 className="m-0 text-[34px] leading-tight font-black text-[#101828] max-sm:text-[28px]">
+          <h1 className="m-0 text-[34px] leading-tight font-black text-brand-navy max-sm:text-[28px]">
             نسيت كلمة المرور؟
           </h1>
-          <p className="m-0 text-base leading-7 font-semibold text-[#667085]">
+          <p className="m-0 text-base leading-7 font-semibold text-brand-gray">
             إدخل بريدك الإلكتروني وسنرسل لك كود إعادة تعيين كلمة المرور.
           </p>
         </div>
 
         <div className="grid gap-2 text-right">
-          <label className="text-base font-black text-[#344054]" htmlFor="email">
+          <label className="text-base font-black text-brand-gray" htmlFor="email">
             البريد الإلكتروني
           </label>
           <input
-            className="min-h-14 w-full rounded-lg border border-[#d0d5dd] bg-white px-4 text-right text-base font-semibold text-[#101828] outline-none transition placeholder:text-[#98a2b3] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10"
+            className="min-h-14 w-full rounded-lg border border-brand-gray/25 bg-white px-4 text-right text-base font-semibold text-brand-navy outline-none transition placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
             id="email"
             name="email"
             type="email"
@@ -76,7 +76,7 @@ export function ForgotPasswordPage() {
 
         <button
           type="submit"
-          className="min-h-14 rounded-lg border-0 bg-[#1c55b6] px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-[#0c3d94] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c55b6] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+          className="min-h-14 rounded-lg border-0 bg-brand-primary px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'جاري الإرسال...' : 'إدخال'}
@@ -84,7 +84,7 @@ export function ForgotPasswordPage() {
 
         <FormAlert tone="muted">
           تحتاج مساعدة؟{' '}
-          <a className="text-[#1c55b6] no-underline hover:text-[#0c3d94]" href="mailto:support@esamco.com">
+          <a className="text-brand-primary no-underline hover:text-brand-navy" href="mailto:support@esamco.com">
             تواصل مع الدعم
           </a>
         </FormAlert>

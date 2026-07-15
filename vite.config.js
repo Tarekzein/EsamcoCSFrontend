@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => {
           target: backendUrl,
           changeOrigin: true,
         },
+        '/broadcasting': {
+          target: backendUrl,
+          changeOrigin: true,
+        },
       },
     },
   }

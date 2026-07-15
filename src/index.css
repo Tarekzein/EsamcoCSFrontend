@@ -1,1 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-navy: #073487;
+  --color-brand-primary: #124AA9;
+  --color-brand-accent: #2678E0;
+  --color-brand-white: #FFFFFF;
+  --color-brand-gray: #625F5F;
+  --color-brand-surface: #F4EFEF;
+
+  --radius-lg: 8px;
+  --radius-2xl: 20px;
+}
+
+:root {
+  font-family: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  color: #073487;
+  background: #F4EFEF;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background: #F4EFEF;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: #F4EFEF;
+  color: #073487;
+  font-family: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

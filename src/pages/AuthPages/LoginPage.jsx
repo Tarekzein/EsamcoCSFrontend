@@ -6,7 +6,7 @@ import {
   FieldError,
   FormAlert,
   PasswordToggle,
-} from '../../features/auth/AuthShell'
+} from '../../features/auth/components/AuthShell'
 import { loginUser } from '../../features/auth/authSlice'
 
 export function LoginPage() {
@@ -45,11 +45,11 @@ export function LoginPage() {
     <AuthShell>
       <form className="mx-auto grid w-full max-w-[610px] gap-7 max-sm:gap-5" onSubmit={handleSubmit}>
         <div className="grid gap-2.5 text-right">
-          <label className="text-[23px] font-black text-[#090909] max-sm:text-[19px]" htmlFor="login">
+          <label className="text-[23px] font-black text-brand-navy max-sm:text-[19px]" htmlFor="login">
             البريد الإلكتروني
           </label>
           <input
-            className="min-h-[72px] w-full rounded-[7px] border border-[#a9a9a9] bg-white px-5 text-right text-[21px] font-semibold text-[#111] outline-none transition-shadow placeholder:text-[#9a9a9a] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10 max-sm:min-h-[58px] max-sm:text-lg"
+            className="min-h-[72px] w-full rounded-[7px] border border-brand-gray/35 bg-white px-5 text-right text-[21px] font-semibold text-brand-navy outline-none transition-shadow placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 max-sm:min-h-[58px] max-sm:text-lg"
             id="login"
             name="login"
             type="email"
@@ -61,12 +61,12 @@ export function LoginPage() {
         </div>
 
         <div className="grid gap-2.5 text-right">
-          <label className="text-[23px] font-black text-[#090909] max-sm:text-[19px]" htmlFor="password">
+          <label className="text-[23px] font-black text-brand-navy max-sm:text-[19px]" htmlFor="password">
             كلمة المرور
           </label>
           <div className="relative">
             <input
-              className="min-h-[72px] w-full rounded-[7px] border border-[#a9a9a9] bg-white px-5 pl-16 text-right text-[21px] font-semibold text-[#111] outline-none transition-shadow placeholder:text-[#9a9a9a] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10 max-sm:min-h-[58px] max-sm:text-lg"
+              className="min-h-[72px] w-full rounded-[7px] border border-brand-gray/35 bg-white px-5 pl-16 text-right text-[21px] font-semibold text-brand-navy outline-none transition-shadow placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 max-sm:min-h-[58px] max-sm:text-lg"
               id="password"
               name="password"
               type={showPassword ? 'text' : 'password'}
@@ -85,14 +85,14 @@ export function LoginPage() {
         <div className="flex items-center justify-between gap-4 max-sm:flex-col-reverse max-sm:items-start">
           <button
             type="button"
-            className="border-0 bg-transparent p-0 text-lg font-bold text-[#1573ff]"
+            className="border-0 bg-transparent p-0 text-lg font-bold text-brand-accent"
             onClick={() => navigate('/forgot-password')}
           >
             نسيت كلمة المرور؟
           </button>
-          <label className="inline-flex items-center gap-2.5 text-lg font-bold text-[#161616]">
+          <label className="inline-flex items-center gap-2.5 text-lg font-bold text-brand-navy">
             <input
-              className="size-7 accent-[#1c55b6]"
+              className="size-7 accent-brand-primary"
               type="checkbox"
               checked={form.remember}
               onChange={(event) => updateField('remember', event.target.checked)}
@@ -105,7 +105,7 @@ export function LoginPage() {
 
         <button
           type="submit"
-          className="min-h-[72px] rounded-[7px] border-0 bg-[#1c55b6] px-6 text-[25px] font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-[#0c3d94] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 max-sm:min-h-[60px] max-sm:text-[21px]"
+          className="min-h-[72px] rounded-[7px] border-0 bg-brand-primary px-6 text-[25px] font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-brand-navy disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 max-sm:min-h-[60px] max-sm:text-[21px]"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
@@ -113,7 +113,7 @@ export function LoginPage() {
 
         <FormAlert tone="muted">
           تحتاج مساعدة؟{' '}
-          <a className="text-[#1573ff] no-underline" href="mailto:support@esamco.com">
+          <a className="text-brand-accent no-underline" href="mailto:support@esamco.com">
             تواصل مع الدعم
           </a>
         </FormAlert>

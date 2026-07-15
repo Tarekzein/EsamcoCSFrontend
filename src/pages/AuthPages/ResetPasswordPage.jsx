@@ -7,7 +7,7 @@ import {
   FormAlert,
   LockIllustration,
   PasswordToggle,
-} from '../../features/auth/AuthShell'
+} from '../../features/auth/components/AuthShell'
 import { submitNewPassword } from '../../features/auth/authSlice'
 
 export function ResetPasswordPage() {
@@ -63,16 +63,16 @@ export function ResetPasswordPage() {
             <span className="mx-auto w-fit rounded-full bg-emerald-50 px-3 py-1 text-sm font-black text-emerald-700">
               تمت العملية
             </span>
-            <h1 className="m-0 text-[34px] leading-tight font-black text-[#101828] max-sm:text-[28px]">
+            <h1 className="m-0 text-[34px] leading-tight font-black text-brand-navy max-sm:text-[28px]">
               تم تحديث كلمة المرور!
             </h1>
-            <p className="m-0 text-base leading-7 font-semibold text-[#667085]">
+            <p className="m-0 text-base leading-7 font-semibold text-brand-gray">
               تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.
             </p>
           </div>
           <button
             type="button"
-            className="min-h-14 rounded-lg border-0 bg-[#1c55b6] px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-[#0c3d94] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c55b6]"
+            className="min-h-14 rounded-lg border-0 bg-brand-primary px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
             onClick={() => navigate('/login')}
           >
             العودة إلى تسجيل الدخول
@@ -89,24 +89,24 @@ export function ResetPasswordPage() {
         onSubmit={handleSubmit}
       >
         <div className="grid gap-3 text-center">
-          <span className="mx-auto w-fit rounded-full bg-[#eef4ff] px-3 py-1 text-sm font-black text-[#1c55b6]">
+          <span className="mx-auto w-fit rounded-full bg-brand-accent/10 px-3 py-1 text-sm font-black text-brand-primary">
             كلمة مرور جديدة
           </span>
-          <h1 className="m-0 text-[34px] leading-tight font-black text-[#101828] max-sm:text-[28px]">
+          <h1 className="m-0 text-[34px] leading-tight font-black text-brand-navy max-sm:text-[28px]">
             إنشاء كلمة مرور جديدة
           </h1>
-          <p className="m-0 text-base leading-7 font-semibold text-[#667085]">
+          <p className="m-0 text-base leading-7 font-semibold text-brand-gray">
             اختر كلمة مرور قوية لا تقل عن 8 أحرف.
           </p>
         </div>
 
         <div className="grid gap-2 text-right">
-          <label className="text-base font-black text-[#344054]" htmlFor="new-password">
+          <label className="text-base font-black text-brand-gray" htmlFor="new-password">
             كلمة المرور
           </label>
           <div className="relative">
             <input
-              className="min-h-14 w-full rounded-lg border border-[#d0d5dd] bg-white px-4 pl-16 text-right text-base font-semibold text-[#101828] outline-none transition placeholder:text-[#98a2b3] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10"
+              className="min-h-14 w-full rounded-lg border border-brand-gray/25 bg-white px-4 pl-16 text-right text-base font-semibold text-brand-navy outline-none transition placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
               id="new-password"
               name="password"
               type={showPassword ? 'text' : 'password'}
@@ -123,12 +123,12 @@ export function ResetPasswordPage() {
         </div>
 
         <div className="grid gap-2 text-right">
-          <label className="text-base font-black text-[#344054]" htmlFor="password-confirmation">
+          <label className="text-base font-black text-brand-gray" htmlFor="password-confirmation">
             تأكيد كلمة المرور
           </label>
           <div className="relative">
             <input
-              className="min-h-14 w-full rounded-lg border border-[#d0d5dd] bg-white px-4 pl-16 text-right text-base font-semibold text-[#101828] outline-none transition placeholder:text-[#98a2b3] focus:border-[#1c55b6] focus:ring-4 focus:ring-[#1c55b6]/10"
+              className="min-h-14 w-full rounded-lg border border-brand-gray/25 bg-white px-4 pl-16 text-right text-base font-semibold text-brand-navy outline-none transition placeholder:text-brand-gray/60 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
               id="password-confirmation"
               name="passwordConfirmation"
               type={showConfirmation ? 'text' : 'password'}
@@ -153,7 +153,7 @@ export function ResetPasswordPage() {
 
         <button
           type="submit"
-          className="min-h-14 rounded-lg border-0 bg-[#1c55b6] px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-[#0c3d94] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c55b6] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+          className="min-h-14 rounded-lg border-0 bg-brand-primary px-6 text-lg font-black text-white shadow-[0_12px_24px_rgba(28,85,182,0.18)] transition hover:-translate-y-px hover:bg-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'جاري الحفظ...' : 'حفظ كلمة المرور'}

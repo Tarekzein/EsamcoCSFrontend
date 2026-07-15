@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { forgotPassword, login, resetPassword, verifyResetOtp } from './authAPI'
+import {
+  fetchCurrentUser,
+  forgotPassword,
+  login,
+  logout,
+  resetPassword,
+  updateOwnOnlineStatus,
+  verifyResetOtp,
+} from './authAPI'
 
 function getStoredUser() {
   const storedUser = localStorage.getItem('auth_user')
@@ -33,6 +41,33 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (credentials) 
   return payload.data
 })
 
+// Refreshes the cached user (e.g. picking up fields like department_id
+// added to the API after the user's last login) without requiring them
+// to log out and back in.
+export const loadCurrentUser = createAsyncThunk('auth/loadCurrentUser', async () => {
+  const payload = await fetchCurrentUser()
+
+  return payload.data
+})
+
+export const toggleOnlineStatus = createAsyncThunk('auth/toggleOnlineStatus', async (isOnline) => {
+  const payload = await updateOwnOnlineStatus(isOnline)
+
+  return payload.data
+})
+
+// Always clears the local session, even if the request fails (e.g. the
+// token already expired or the network is down) - otherwise the user
+// would be stuck unable to log out.
+export const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
+  try {
+    await logout()
+  } catch {
+    // Best-effort - the backend marks the user offline and revokes the
+    // token; local logout still proceeds below regardless of outcome.
+  }
+})
+
 export const requestPasswordReset = createAsyncThunk('auth/requestPasswordReset', async (email) => {
   const payload = await forgotPassword(email)
 
@@ -50,17 +85,21 @@ export const submitNewPassword = createAsyncThunk('auth/submitNewPassword', asyn
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    loggedOut(state) {
-      state.user = null
-      state.token = null
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user
         state.token = action.payload.token
+      })
+      .addCase(loadCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload.user
+      })
+      .addCase(toggleOnlineStatus.fulfilled, (state, action) => {
+        state.user = action.payload
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null
+        state.token = null
       })
       .addCase(requestPasswordReset.fulfilled, (state, action) => {
         state.resetEmail = action.payload.email
@@ -102,7 +141,5 @@ const authSlice = createSlice({
       )
   },
 })
-
-export const { loggedOut } = authSlice.actions
 
 export default authSlice.reducer

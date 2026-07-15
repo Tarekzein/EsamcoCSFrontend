@@ -1,10 +1,10 @@
-import { navigate } from '../../router/navigation'
+import { navigate } from '../../../router/navigation'
 
 export function AuthShell({ children, variant = 'split' }) {
   const isSplit = variant === 'split'
   const shellClass = isSplit
-    ? 'relative grid min-h-svh overflow-hidden bg-[#eef3f8] font-[Tahoma,Arial,system-ui,sans-serif] text-[#101828] lg:grid-cols-[minmax(0,1fr)_minmax(440px,0.92fr)]'
-    : 'relative grid min-h-svh place-items-center overflow-hidden bg-[#eef3f8] px-6 py-16 font-[Tahoma,Arial,system-ui,sans-serif] text-[#101828] max-sm:px-3 max-sm:py-24'
+    ? 'relative grid min-h-svh overflow-hidden bg-brand-surface font-sans text-brand-navy lg:grid-cols-[minmax(0,1fr)_minmax(440px,0.92fr)]'
+    : 'relative grid min-h-svh place-items-center overflow-hidden bg-brand-surface px-6 py-16 font-sans text-brand-navy max-sm:px-3 max-sm:py-24'
 
   return (
     <main className={shellClass} dir="rtl">
@@ -14,38 +14,38 @@ export function AuthShell({ children, variant = 'split' }) {
         <>
           <section className="grid content-center justify-items-center gap-9 px-12 pt-36 pb-18 max-lg:min-h-0 max-lg:px-6 max-lg:pt-32 max-lg:pb-8">
             <div className="grid max-w-[460px] gap-4 text-center">
-              <span className="mx-auto inline-flex w-fit rounded-full border border-[#1c55b6]/15 bg-white/70 px-4 py-2 text-sm font-black text-[#1c55b6]">
+              <span className="mx-auto inline-flex w-fit rounded-full border border-brand-primary/15 bg-white/70 px-4 py-2 text-sm font-black text-brand-primary">
                 ESAMCO Customer Support
               </span>
-              <h1 className="m-0 text-[42px] leading-tight font-black text-[#050505] max-sm:text-[32px]">
+              <h1 className="m-0 text-[42px] leading-tight font-black text-brand-navy max-sm:text-[32px]">
                 مرحباً بك!
               </h1>
-              <p className="m-0 text-xl leading-8 font-bold text-[#667085] max-sm:text-[18px]">
+              <p className="m-0 text-xl leading-8 font-bold text-brand-gray max-sm:text-[18px]">
                 سجل الدخول للمتابعة و إدارة دعم العملاء بسهولة.
               </p>
             </div>
             <SupportIllustration />
             <div className="grid w-full max-w-[520px] grid-cols-3 gap-3 text-center max-sm:grid-cols-1">
-              <div className="rounded-lg border border-[#d8e0ec] bg-white/75 px-4 py-3">
-                <p className="m-0 text-sm font-bold text-[#667085]">متابعة</p>
-                <strong className="text-lg text-[#101828]">فورية</strong>
+              <div className="rounded-lg border border-brand-gray/20 bg-white/75 px-4 py-3">
+                <p className="m-0 text-sm font-bold text-brand-gray">متابعة</p>
+                <strong className="text-lg text-brand-navy">فورية</strong>
               </div>
-              <div className="rounded-lg border border-[#d8e0ec] bg-white/75 px-4 py-3">
-                <p className="m-0 text-sm font-bold text-[#667085]">حماية</p>
-                <strong className="text-lg text-[#101828]">مؤمنة</strong>
+              <div className="rounded-lg border border-brand-gray/20 bg-white/75 px-4 py-3">
+                <p className="m-0 text-sm font-bold text-brand-gray">حماية</p>
+                <strong className="text-lg text-brand-navy">مؤمنة</strong>
               </div>
-              <div className="rounded-lg border border-[#d8e0ec] bg-white/75 px-4 py-3">
-                <p className="m-0 text-sm font-bold text-[#667085]">إدارة</p>
-                <strong className="text-lg text-[#101828]">منظمة</strong>
+              <div className="rounded-lg border border-brand-gray/20 bg-white/75 px-4 py-3">
+                <p className="m-0 text-sm font-bold text-brand-gray">إدارة</p>
+                <strong className="text-lg text-brand-navy">منظمة</strong>
               </div>
             </div>
           </section>
-          <section className="grid min-h-svh content-center border-r border-[#e5eaf1] bg-white px-[70px] pt-30 pb-16 max-lg:min-h-0 max-lg:border-r-0 max-lg:px-6 max-lg:py-10">
+          <section className="grid min-h-svh content-center border-r border-brand-gray/15 bg-white px-[70px] pt-30 pb-16 max-lg:min-h-0 max-lg:border-r-0 max-lg:px-6 max-lg:py-10">
             {children}
           </section>
         </>
       ) : (
-        <section className="grid min-h-[min(820px,calc(100svh-128px))] w-full max-w-[680px] content-center rounded-lg border border-[#e5eaf1] bg-white px-10 py-[74px] shadow-[0_22px_60px_rgba(17,45,95,0.1)] max-sm:min-h-0 max-sm:px-4 max-sm:py-10">
+        <section className="grid min-h-[min(820px,calc(100svh-128px))] w-full max-w-[680px] content-center rounded-lg border border-brand-gray/15 bg-white px-10 py-[74px] shadow-[0_22px_60px_rgba(17,45,95,0.1)] max-sm:min-h-0 max-sm:px-4 max-sm:py-10">
           {children}
         </section>
       )}
@@ -70,7 +70,7 @@ function BackButton() {
   return (
     <button
       type="button"
-      className="absolute top-9 right-9 z-10 inline-flex min-h-11 items-center gap-2 rounded-lg border border-[#d8e0ec] bg-white/85 px-4 text-sm font-black text-[#344054] shadow-[0_10px_25px_rgba(17,45,95,0.08)] transition hover:-translate-y-px hover:border-[#1c55b6]/30 hover:bg-white hover:text-[#1c55b6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c55b6] max-lg:top-6 max-lg:right-6 max-sm:top-4 max-sm:right-4"
+      className="absolute top-9 right-9 z-10 inline-flex min-h-11 items-center gap-2 rounded-lg border border-brand-gray/20 bg-white/85 px-4 text-sm font-black text-brand-gray shadow-[0_10px_25px_rgba(17,45,95,0.08)] transition hover:-translate-y-px hover:border-brand-primary/30 hover:bg-white hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary max-lg:top-6 max-lg:right-6 max-sm:top-4 max-sm:right-4"
       onClick={handleBack}
       aria-label="رجوع"
     >
@@ -90,11 +90,11 @@ function BackButton() {
 
 export function Logo({ compact = false }) {
   const wrapperClass = compact
-    ? 'inline-flex items-center gap-2.5 text-[#5e646f] no-underline [direction:ltr]'
-    : 'absolute top-9 left-9 z-10 inline-flex items-center gap-2.5 text-[#5e646f] no-underline [direction:ltr] max-lg:top-6 max-lg:left-6 max-sm:top-4 max-sm:left-4'
+    ? 'inline-flex items-center gap-2.5 text-brand-gray no-underline [direction:ltr]'
+    : 'absolute top-9 left-9 z-10 inline-flex items-center gap-2.5 text-brand-gray no-underline [direction:ltr] max-lg:top-6 max-lg:left-6 max-sm:top-4 max-sm:left-4'
   const markClass = compact
-    ? 'grid size-11 place-items-center rounded-[8px_16px_8px_16px] bg-linear-to-br from-[#56b8ff] via-[#0f5fd3] to-[#001f82] text-3xl leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)]'
-    : 'grid size-[58px] place-items-center rounded-[8px_20px_8px_20px] bg-linear-to-br from-[#56b8ff] via-[#0f5fd3] to-[#001f82] text-[42px] leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)] max-sm:size-10 max-sm:text-3xl'
+    ? 'grid size-11 place-items-center rounded-[8px_16px_8px_16px] bg-linear-to-br from-brand-accent via-brand-primary to-brand-navy text-3xl leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)]'
+    : 'grid size-[58px] place-items-center rounded-[8px_20px_8px_20px] bg-linear-to-br from-brand-accent via-brand-primary to-brand-navy text-[42px] leading-none font-black text-white shadow-[0_10px_20px_rgba(18,82,188,0.22)] max-sm:size-10 max-sm:text-3xl'
   const textClass = compact
     ? 'grid gap-0.5 text-left tracking-[5px]'
     : 'grid gap-1 text-left tracking-[8px] max-sm:tracking-[5px]'
@@ -102,8 +102,8 @@ export function Logo({ compact = false }) {
     ? 'text-[22px] leading-none font-bold'
     : 'text-[34px] leading-none font-bold max-sm:text-[22px]'
   const smallClass = compact
-    ? 'inline-flex items-center justify-center gap-2 text-[11px] leading-none font-bold before:h-0.5 before:w-6 before:bg-[#777d87] after:h-0.5 after:w-6 after:bg-[#777d87]'
-    : 'inline-flex items-center justify-center gap-2 text-[17px] leading-none font-bold before:h-0.5 before:w-12 before:bg-[#777d87] after:h-0.5 after:w-12 after:bg-[#777d87] max-sm:text-[11px] max-sm:before:w-6 max-sm:after:w-6'
+    ? 'inline-flex items-center justify-center gap-2 text-[11px] leading-none font-bold before:h-0.5 before:w-6 before:bg-brand-gray after:h-0.5 after:w-6 after:bg-brand-gray'
+    : 'inline-flex items-center justify-center gap-2 text-[17px] leading-none font-bold before:h-0.5 before:w-12 before:bg-brand-gray after:h-0.5 after:w-12 after:bg-brand-gray max-sm:text-[11px] max-sm:before:w-6 max-sm:after:w-6'
 
   return (
     <a className={wrapperClass} href="/login" aria-label="ESAMCO Group">
@@ -124,26 +124,26 @@ export function SupportIllustration() {
       role="img"
       aria-label="دعم العملاء"
     >
-      <ellipse cx="295" cy="280" rx="205" ry="130" fill="#e8f1ff" />
-      <circle cx="520" cy="188" r="7" fill="#5b9bff" />
-      <circle cx="70" cy="220" r="8" fill="#5b9bff" />
+      <ellipse cx="295" cy="280" rx="205" ry="130" fill="#F4EFEF" />
+      <circle cx="520" cy="188" r="7" fill="#2678E0" />
+      <circle cx="70" cy="220" r="8" fill="#2678E0" />
       <path d="M77 330c-14-46 14-81 35-61 16 15 3 38-35 61Z" fill="#2fa86a" />
       <path d="M110 330c-5-58 32-94 47-66 12 23-8 45-47 66Z" fill="#37be7d" />
       <path d="M130 334c16-49 56-64 61-34 4 24-20 37-61 34Z" fill="#1f9f62" />
       <path d="M91 334h74l-10 58H101l-10-58Z" fill="#d99525" />
       <path d="M88 328h80v14H88z" rx="7" fill="#e6b844" />
-      <path d="M192 329h286l20 28H166l26-28Z" fill="#8ab7f7" />
-      <rect x="212" y="201" width="230" height="145" rx="14" fill="#8ab7f7" />
+      <path d="M192 329h286l20 28H166l26-28Z" fill="#2678E0" />
+      <rect x="212" y="201" width="230" height="145" rx="14" fill="#2678E0" />
       <rect x="227" y="216" width="200" height="112" rx="7" fill="#ffffff" />
-      <path d="m260 276 35-35 48 21 38-52" fill="none" stroke="#91bbf7" strokeWidth="10" />
-      <rect x="270" y="292" width="22" height="26" rx="4" fill="#72a7f2" />
-      <rect x="307" y="274" width="22" height="44" rx="4" fill="#72a7f2" />
-      <rect x="344" y="254" width="22" height="64" rx="4" fill="#72a7f2" />
-      <path d="M219 188c8-89 149-92 158-3" fill="none" stroke="#064ec3" strokeWidth="24" />
-      <path d="M212 206c0-20 13-38 29-38h12v82h-14c-15 0-27-18-27-44Z" fill="#0b63dc" />
-      <path d="M356 168h13c16 0 29 18 29 38s-12 44-27 44h-15v-82Z" fill="#0b63dc" />
-      <path d="M365 250c-20 28-58 34-90 18" fill="none" stroke="#0646aa" strokeWidth="11" strokeLinecap="round" />
-      <path d="M94 130c28-40 93-40 120 0 27 40-5 91-60 91-13 0-26-3-37-8l-45 23 18-42c-20-18-21-43 4-64Z" fill="#a8c9ff" />
+      <path d="m260 276 35-35 48 21 38-52" fill="none" stroke="#124AA9" strokeWidth="10" />
+      <rect x="270" y="292" width="22" height="26" rx="4" fill="#124AA9" />
+      <rect x="307" y="274" width="22" height="44" rx="4" fill="#124AA9" />
+      <rect x="344" y="254" width="22" height="64" rx="4" fill="#124AA9" />
+      <path d="M219 188c8-89 149-92 158-3" fill="none" stroke="#073487" strokeWidth="24" />
+      <path d="M212 206c0-20 13-38 29-38h12v82h-14c-15 0-27-18-27-44Z" fill="#124AA9" />
+      <path d="M356 168h13c16 0 29 18 29 38s-12 44-27 44h-15v-82Z" fill="#124AA9" />
+      <path d="M365 250c-20 28-58 34-90 18" fill="none" stroke="#073487" strokeWidth="11" strokeLinecap="round" />
+      <path d="M94 130c28-40 93-40 120 0 27 40-5 91-60 91-13 0-26-3-37-8l-45 23 18-42c-20-18-21-43 4-64Z" fill="#2678E0" />
       <circle cx="127" cy="174" r="7" fill="#ffffff" />
       <circle cx="155" cy="174" r="7" fill="#ffffff" />
       <circle cx="183" cy="174" r="7" fill="#ffffff" />
@@ -153,9 +153,9 @@ export function SupportIllustration() {
 
 export function MailIllustration({ tone = 'blue' }) {
   const isGreen = tone === 'green'
-  const primary = isGreen ? '#18bf49' : '#0a7ef2'
-  const secondary = isGreen ? '#35d85d' : '#00b6ff'
-  const soft = isGreen ? '#e4f8e8' : '#ddebff'
+  const primary = isGreen ? '#18bf49' : '#124AA9'
+  const secondary = isGreen ? '#35d85d' : '#2678E0'
+  const soft = isGreen ? '#e4f8e8' : '#F4EFEF'
 
   return (
     <svg className="mx-auto h-42 w-52" viewBox="0 0 210 168" aria-hidden="true">
@@ -191,7 +191,7 @@ export function PasswordToggle({ isVisible, onClick }) {
   return (
     <button
       type="button"
-      className="absolute top-1/2 left-3 grid size-11 -translate-y-1/2 place-items-center rounded-full text-[#8c8c8c] transition hover:bg-[#f0f4fb] hover:text-[#1c55b6]"
+      className="absolute top-1/2 left-3 grid size-11 -translate-y-1/2 place-items-center rounded-full text-brand-gray transition hover:bg-brand-gray/8 hover:text-brand-primary"
       onClick={onClick}
       aria-label={isVisible ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
     >
@@ -234,7 +234,7 @@ export function FormAlert({ children, tone = 'error' }) {
       ? 'border-amber-200 bg-amber-50 text-amber-700'
       : tone === 'success'
         ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-        : 'border-transparent bg-transparent text-[#667085]'
+        : 'border-transparent bg-transparent text-brand-gray'
 
   return <p className={`m-0 rounded-lg border px-4 py-3 text-center text-base leading-relaxed font-bold ${toneClass}`}>{children}</p>
 }
