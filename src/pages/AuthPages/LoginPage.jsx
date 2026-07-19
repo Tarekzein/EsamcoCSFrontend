@@ -42,7 +42,7 @@ export function LoginPage() {
   }
 
   return (
-    <AuthShell>
+    <AuthShell showBackButton={false}>
       <form className="mx-auto grid w-full max-w-[610px] gap-7 max-sm:gap-5" onSubmit={handleSubmit}>
         <div className="grid gap-2.5 text-right">
           <label className="text-[23px] font-black text-brand-navy max-sm:text-[19px]" htmlFor="login">

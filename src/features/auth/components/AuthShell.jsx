@@ -1,7 +1,7 @@
 import logoColor from '../../../assets/logo-color.png'
 import { navigate } from '../../../router/navigation'
 
-export function AuthShell({ children, variant = 'split' }) {
+export function AuthShell({ children, variant = 'split', showBackButton = true }) {
   const isSplit = variant === 'split'
   const shellClass = isSplit
     ? 'relative grid min-h-svh overflow-hidden bg-brand-surface font-sans text-brand-navy lg:grid-cols-[minmax(0,1fr)_minmax(440px,0.92fr)]'
@@ -10,7 +10,7 @@ export function AuthShell({ children, variant = 'split' }) {
   return (
     <main className={shellClass} dir="rtl">
       <Logo />
-      <BackButton />
+      {showBackButton && <BackButton />}
       {isSplit ? (
         <>
           <section className="grid content-center justify-items-center gap-9 px-12 pt-36 pb-18 max-lg:min-h-0 max-lg:px-6 max-lg:pt-32 max-lg:pb-8">
