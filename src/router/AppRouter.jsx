@@ -4,6 +4,7 @@ import { DashboardLayout } from '../layouts/DashboardLayout'
 import { AuditLogsListPage } from '../pages/AuditLogsPages/AuditLogsListPage'
 import { ForgotPasswordPage } from '../pages/AuthPages/ForgotPasswordPage'
 import { LoginPage } from '../pages/AuthPages/LoginPage'
+import { CallsListPage } from '../pages/CallsPages/CallsListPage'
 import { CustomersListPage } from '../pages/CustomersPages/CustomersListPage'
 import { DepartmentsListPage } from '../pages/DepartmentsPages/DepartmentsListPage'
 import { ProtectedRoute } from '../Middlewares/AuthMiddleware/ProtectedRoute'
@@ -29,6 +30,7 @@ const ROUTE_PAGES = {
   '/departments': DepartmentsListPage,
   '/customers': CustomersListPage,
   '/audit-logs': AuditLogsListPage,
+  '/calls': CallsListPage,
 }
 
 function getRoute() {

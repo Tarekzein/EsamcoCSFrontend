@@ -34,13 +34,14 @@ export function goBack(fallback = '/dashboard') {
 }
 
 // `roles` gates what shows in the sidebar for the current user. Kept in
-// sync with the backend route middleware in Modules/Users/routes/api.php
-// and Modules/LiveChat/routes/api.php:
+// sync with the backend route middleware in Modules/Users/routes/api.php,
+// Modules/LiveChat/routes/api.php, and Modules/Telephony/routes/api.php:
 // - /api/users (index) -> role:admin|supervisor|agent (supervisors/agents
 //   are scoped server-side to their own department - see
 //   UserService::listUsers()).
 // - /api/departments (index) -> any authenticated role.
 // - /api/audit-logs -> role:admin|supervisor.
+// - /api/telephony/calls -> role:supervisor|agent (no admin).
 const ALL_ROLES = ['admin', 'supervisor', 'agent']
 
 export const NAV_ITEMS = [
@@ -51,7 +52,7 @@ export const NAV_ITEMS = [
   // role:admin in Modules/Ticket/routes/api.php).
   { path: '/ticket-settings', label: 'إعدادات التذاكر', title: 'Ticket Settings', icon: SettingsIcon, roles: ['admin'] },
   { path: '/live-chat', label: 'الدردشة المباشرة', title: 'Live Chat', icon: ChatIcon, roles: ALL_ROLES },
-  { path: '/calls', label: 'المكالمات', title: 'Calls', icon: PhoneIcon, roles: ALL_ROLES },
+  { path: '/calls', label: 'المكالمات', title: 'Calls', icon: PhoneIcon, roles: ['supervisor', 'agent'] },
   { path: '/customers', label: 'العملاء', title: 'Customers', icon: UsersIcon, roles: ALL_ROLES },
   { path: '/users', label: 'المستخدمون', title: 'Users', icon: UsersIcon, roles: ['admin', 'supervisor', 'agent'] },
   { path: '/departments', label: 'الأقسام', title: 'Departments', icon: DepartmentIcon, roles: ALL_ROLES },

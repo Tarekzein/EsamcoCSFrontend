@@ -15,6 +15,7 @@ import customersReducer from '../features/customers/customersSlice'
 import dashboardsReducer from '../features/dashboards/dashboardsSlice'
 import departmentsReducer from '../features/departments/departmentsSlice'
 import liveChatReducer from '../features/liveChat/liveChatSlice'
+import telephonyReducer from '../features/telephony/telephonySlice'
 import ticketSettingsReducer from '../features/tickets/ticketSettingsSlice'
 import ticketsReducer from '../features/tickets/ticketsSlice'
 import usersReducer from '../features/users/usersSlice'
@@ -75,6 +76,7 @@ export const store = configureStore({
     departments: departmentsReducer,
     auditLogs: auditLogsReducer,
     customers: customersReducer,
+    telephony: telephonyReducer,
     tickets: ticketsReducer,
     ticketSettings: ticketSettingsReducer,
   },
