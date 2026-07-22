@@ -27,6 +27,7 @@ import { loadUsers } from '../../features/users/usersSlice'
 import { loadDepartments } from '../../features/departments/departmentsSlice'
 import { ChatIcon } from '../../layouts/navIcons'
 import { connectEcho, onConnectionStateChange } from '../../lib/echo'
+import { goBack, navigate } from '../../router/navigation'
 
 const CONNECTION_LABELS = {
   connected: { label: 'متصل', dot: 'bg-green-500' },
@@ -110,8 +111,10 @@ export function LiveChatPage({ conversationIdFromUrl }) {
   }, [dispatch, conversationsMeta])
 
   useEffect(() => {
-    if (conversationIdFromUrl && conversationsStatus === 'succeeded' && !selectedId) {
+    if (conversationIdFromUrl && conversationsStatus === 'succeeded' && selectedId !== conversationIdFromUrl) {
       dispatch(conversationSelected(conversationIdFromUrl))
+    } else if (!conversationIdFromUrl && selectedId !== null) {
+      dispatch(conversationSelected(null))
     }
   }, [conversationIdFromUrl, conversationsStatus, selectedId, dispatch])
 
@@ -305,7 +308,7 @@ export function LiveChatPage({ conversationIdFromUrl }) {
   // to the list view.
   const handleBackToList = useCallback(() => {
     dispatch(conversationSelected(null))
-    window.history.replaceState({}, '', '/live-chat')
+    goBack('/live-chat')
   }, [dispatch])
 
   return (
@@ -349,7 +352,7 @@ export function LiveChatPage({ conversationIdFromUrl }) {
             selectedId={selectedId}
             onSelect={(id) => {
               dispatch(conversationSelected(id))
-              window.history.replaceState({}, '', `/live-chat/${id}`)
+              navigate(`/live-chat/${id}`, { state: { from: '/live-chat' }, scroll: false })
             }}
             tab={tab}
             onTabChange={setTab}

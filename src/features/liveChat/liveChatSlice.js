@@ -438,8 +438,21 @@ const liveChatSlice = createSlice({
       })
       .addCase(convertSelectedConversationToTicket.fulfilled, (state, action) => {
         state.conversationActionStatus = 'succeeded'
-        const ticketLabel = action.payload.ticket_number || `#${action.payload.id}`
+        const ticket = action.payload
+        const ticketLabel = ticket.ticket_number || `#${ticket.id}`
         state.conversationActionSuccess = `تم تحويل المحادثة إلى التذكرة ${ticketLabel} بنجاح.`
+
+        // Attach the ticket to its conversation so the panel swaps the
+        // convert action for a ticket chip immediately, without a refetch.
+        const conversation = state.conversations.find((item) => item.id === ticket.conversation_id)
+
+        if (conversation) {
+          conversation.ticket = {
+            id: ticket.id,
+            ticket_number: ticket.ticket_number,
+            status: ticket.status,
+          }
+        }
       })
       .addCase(convertSelectedConversationToTicket.rejected, (state, action) => {
         state.conversationActionStatus = 'failed'

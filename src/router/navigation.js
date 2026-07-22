@@ -12,9 +12,25 @@ import {
   UsersIcon,
 } from '../layouts/navIcons'
 
-export function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('popstate'))
+export const NAVIGATION_EVENT = 'app:navigate'
+
+export function currentPath() {
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`
+}
+
+export function navigate(path, { replace = false, state = {}, scroll = true } = {}) {
+  window.history[replace ? 'replaceState' : 'pushState'](state, '', path)
+  window.dispatchEvent(new CustomEvent(NAVIGATION_EVENT, { detail: { path } }))
+
+  if (scroll) window.scrollTo({ top: 0, behavior: 'instant' })
+}
+
+export function goBack(fallback = '/dashboard') {
+  if (window.history.state?.from) {
+    window.history.back()
+  } else {
+    navigate(fallback, { replace: true })
+  }
 }
 
 // `roles` gates what shows in the sidebar for the current user. Kept in
@@ -30,7 +46,11 @@ const ALL_ROLES = ['admin', 'supervisor', 'agent']
 export const NAV_ITEMS = [
   { path: '/dashboard', label: 'لوحة التحكم', title: 'Dashboard', icon: HomeIcon, roles: ALL_ROLES },
   { path: '/tickets', label: 'التذاكر', title: 'Tickets', icon: TicketIcon, roles: ALL_ROLES },
-  { path: '/live-chat', label: 'الدردشة المباشرة', title: 'Live Chat', icon: ChatIcon, roles: ['supervisor', 'agent'] },
+  // Ticket categories + SLA policies. Admin-only, matching the backend
+  // (ticket-category writes and the sla-policies apiResource are both
+  // role:admin in Modules/Ticket/routes/api.php).
+  { path: '/ticket-settings', label: 'إعدادات التذاكر', title: 'Ticket Settings', icon: SettingsIcon, roles: ['admin'] },
+  { path: '/live-chat', label: 'الدردشة المباشرة', title: 'Live Chat', icon: ChatIcon, roles: ALL_ROLES },
   { path: '/calls', label: 'المكالمات', title: 'Calls', icon: PhoneIcon, roles: ALL_ROLES },
   { path: '/customers', label: 'العملاء', title: 'Customers', icon: UsersIcon, roles: ALL_ROLES },
   { path: '/users', label: 'المستخدمون', title: 'Users', icon: UsersIcon, roles: ['admin', 'supervisor', 'agent'] },

@@ -9,6 +9,7 @@ import {
   TICKET_STATUS_LABELS,
 } from '../../features/customers/customerLabels'
 import { ChatIcon, ChevronLeftIcon, MailIcon, PhoneIcon, TicketIcon } from '../../layouts/navIcons'
+import { currentPath, navigate } from '../../router/navigation'
 
 function InitialsAvatar({ name }) {
   const initials =
@@ -27,7 +28,7 @@ function InitialsAvatar({ name }) {
   )
 }
 
-function ActionButton({ href, disabled, primary, children }) {
+function ActionButton({ href, onClick, disabled, primary, children }) {
   const classes = `rounded-lg px-4 py-2 text-sm font-bold transition ${
     disabled
       ? 'cursor-not-allowed border border-brand-gray/15 text-brand-gray/40'
@@ -41,6 +42,14 @@ function ActionButton({ href, disabled, primary, children }) {
       <span className={classes} title="ستتوفر هذه الميزة قريباً" aria-disabled="true">
         {children}
       </span>
+    )
+  }
+
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={classes}>
+        {children}
+      </button>
     )
   }
 
@@ -76,10 +85,18 @@ function ActivityRow({ label, value }) {
 }
 
 function TicketActivityCard({ entry }) {
+  // NOTE: timeline entries carry a raw serialized model, not a Resource -
+  // so fields are flat snake_case (ticket.sla_response_breached) with no
+  // `sla`/`escalation` nesting. Don't reuse the ticket-detail components
+  // here; link out to the real detail view instead.
   const ticket = entry.model
 
   return (
-    <div className="grid gap-2.5 rounded-lg border border-brand-gray/12 bg-white p-4">
+    <button
+      type="button"
+      onClick={() => navigate(`/tickets/${ticket.id}`, { state: { from: currentPath() } })}
+      className="grid w-full cursor-pointer gap-2.5 rounded-lg border border-brand-gray/12 bg-white p-4 text-right transition hover:border-brand-primary/30 hover:bg-brand-gray/4"
+    >
       <span className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">
         <TicketIcon className="size-3.5" />
         تم إنشاء تذكرة
@@ -108,7 +125,7 @@ function TicketActivityCard({ entry }) {
         <span>{formatDate(entry.created_at)}</span>
         <span>تاريخ:</span>
       </div>
-    </div>
+    </button>
   )
 }
 
@@ -207,7 +224,10 @@ export function CustomerDetailView({ customer, timeline, timelineStatus, onBack,
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 border-t border-brand-gray/10 pt-4">
-          <ActionButton disabled primary>
+          {/* Carries the customer through as a query param rather than
+              cross-page state - the router is hand-rolled and has no
+              route-state mechanism. TicketsListPage reads ?new=1 on mount. */}
+          <ActionButton primary onClick={() => navigate(`/tickets?new=1&customer_id=${customer.id}`)}>
             + إنشاء تذكرة
           </ActionButton>
           <ActionButton disabled>بدء محادثة</ActionButton>

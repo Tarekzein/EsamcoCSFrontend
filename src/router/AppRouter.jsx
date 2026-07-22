@@ -11,13 +11,20 @@ import { DashboardPage } from '../pages/Dashboard/DashboardPage'
 import { LiveChatPage } from '../pages/LiveChat/LiveChatPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { ResetPasswordPage } from '../pages/AuthPages/ResetPasswordPage'
+import { TicketsListPage } from '../pages/TicketsPages/TicketsListPage'
+import { TicketSettingsPage } from '../pages/TicketSettingsPages/TicketSettingsPage'
 import { UsersListPage } from '../pages/UsersPages/UsersListPage'
 import { VerifyPage } from '../pages/AuthPages/VerifyPage'
-import { NAV_ITEMS } from './navigation'
+import { SupportPage } from '../pages/SupportPages/SupportPage'
+import { SupportTicketPage } from '../pages/SupportPages/SupportTicketPage'
+import { NotFoundPage } from '../pages/NotFoundPage'
+import { NAVIGATION_EVENT, NAV_ITEMS } from './navigation'
 
 const ROUTE_PAGES = {
   '/dashboard': DashboardPage,
   '/live-chat': LiveChatPage,
+  '/tickets': TicketsListPage,
+  '/ticket-settings': TicketSettingsPage,
   '/users': UsersListPage,
   '/departments': DepartmentsListPage,
   '/customers': CustomersListPage,
@@ -38,6 +45,16 @@ function getCustomerId(path) {
   return match ? Number(match[1]) : null
 }
 
+function getTicketId(path) {
+  const match = path.match(/^\/tickets\/(\d+)$/)
+  return match ? Number(match[1]) : null
+}
+
+function getSupportTicketUuid(path) {
+  const match = path.match(/^\/support\/tickets\/([0-9a-f-]+)$/i)
+  return match ? match[1] : null
+}
+
 function RouterView() {
   const [route, setRoute] = useState(getRoute)
 
@@ -47,8 +64,12 @@ function RouterView() {
     }
 
     window.addEventListener('popstate', handleRouteChange)
+    window.addEventListener(NAVIGATION_EVENT, handleRouteChange)
 
-    return () => window.removeEventListener('popstate', handleRouteChange)
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange)
+      window.removeEventListener(NAVIGATION_EVENT, handleRouteChange)
+    }
   }, [])
 
   if (route === '/' || route === '/login') {
@@ -67,6 +88,16 @@ function RouterView() {
     return <ResetPasswordPage />
   }
 
+  if (route === '/support') {
+    return <SupportPage />
+  }
+
+  const supportTicketUuid = getSupportTicketUuid(route)
+
+  if (supportTicketUuid) {
+    return <SupportTicketPage uuid={supportTicketUuid} />
+  }
+
   const liveChatConversationId = getLiveChatConversationId(route)
 
   if (liveChatConversationId !== null) {
@@ -74,6 +105,18 @@ function RouterView() {
       <ProtectedRoute>
         <DashboardLayout currentPath="/live-chat" pageTitle="Live Chat">
           <LiveChatPage conversationIdFromUrl={liveChatConversationId} />
+        </DashboardLayout>
+      </ProtectedRoute>
+    )
+  }
+
+  const ticketId = getTicketId(route)
+
+  if (ticketId !== null) {
+    return (
+      <ProtectedRoute>
+        <DashboardLayout currentPath="/tickets" pageTitle="Tickets">
+          <TicketsListPage ticketIdFromUrl={ticketId} />
         </DashboardLayout>
       </ProtectedRoute>
     )
@@ -105,7 +148,7 @@ function RouterView() {
     )
   }
 
-  return <LoginPage />
+  return <NotFoundPage />
 }
 
 export function AppRouter() {

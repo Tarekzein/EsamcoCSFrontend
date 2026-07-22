@@ -63,6 +63,13 @@ function ConversationListItem({ conversation, isSelected, onSelect }) {
               <span className={`size-1.5 rounded-full ${status.color}`} />
               {status.label}
             </span>
+            {/* Lets a supervisor see at a glance which chats are already
+                tracked as tickets. */}
+            {conversation.ticket ? (
+              <span className="rounded-full bg-brand-accent/10 px-2 py-0.5 text-[10px] font-bold text-brand-primary">
+                {conversation.ticket.ticket_number}
+              </span>
+            ) : null}
             {conversation.priority === 'high' || conversation.priority === 'urgent' ? (
               <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${PRIORITY_BADGE[conversation.priority]}`}>
                 {PRIORITY_LABELS[conversation.priority]}

@@ -15,6 +15,8 @@ import customersReducer from '../features/customers/customersSlice'
 import dashboardsReducer from '../features/dashboards/dashboardsSlice'
 import departmentsReducer from '../features/departments/departmentsSlice'
 import liveChatReducer from '../features/liveChat/liveChatSlice'
+import ticketSettingsReducer from '../features/tickets/ticketSettingsSlice'
+import ticketsReducer from '../features/tickets/ticketsSlice'
 import usersReducer from '../features/users/usersSlice'
 
 const authPersistenceMiddleware = createListenerMiddleware()
@@ -73,6 +75,8 @@ export const store = configureStore({
     departments: departmentsReducer,
     auditLogs: auditLogsReducer,
     customers: customersReducer,
+    tickets: ticketsReducer,
+    ticketSettings: ticketSettingsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(authPersistenceMiddleware.middleware),

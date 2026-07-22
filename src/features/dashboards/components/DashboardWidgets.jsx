@@ -2,6 +2,7 @@ const NOTE_TONE_CLASSES = {
   emerald: 'text-emerald-600',
   blue: 'text-brand-primary',
   amber: 'text-amber-600',
+  red: 'text-red-600',
 }
 
 export function DashboardHero({ eyebrow = 'ESAMCO CRM', title, description }) {
@@ -14,14 +15,28 @@ export function DashboardHero({ eyebrow = 'ESAMCO CRM', title, description }) {
   )
 }
 
-export function StatCard({ label, value, note, tone = 'blue' }) {
-  return (
-    <article className="rounded-lg border border-brand-gray/15 bg-white p-5 shadow-[0_14px_35px_rgba(17,45,95,0.06)]">
+export function StatCard({ label, value, note, tone = 'blue', onClick }) {
+  const body = (
+    <>
       <p className="m-0 text-sm font-bold text-brand-gray">{label}</p>
       <strong className="mt-3 block text-3xl font-black text-brand-navy">{value}</strong>
       {note ? <span className={`mt-2 block text-sm font-bold ${NOTE_TONE_CLASSES[tone]}`}>{note}</span> : null}
-    </article>
+    </>
   )
+
+  const classes = 'rounded-lg border border-brand-gray/15 bg-white p-5 shadow-[0_14px_35px_rgba(17,45,95,0.06)]'
+
+  // Cards that map onto a supported ticket filter drill through to it;
+  // the rest stay plain articles.
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={`${classes} cursor-pointer text-right transition hover:border-brand-primary/30 hover:shadow-[0_18px_45px_rgba(17,45,95,0.1)]`}>
+        {body}
+      </button>
+    )
+  }
+
+  return <article className={classes}>{body}</article>
 }
 
 export function StatGrid({ children }) {

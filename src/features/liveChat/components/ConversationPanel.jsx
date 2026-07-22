@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { navigate } from "../../../router/navigation";
+import { currentPath, navigate } from "../../../router/navigation";
 import { avatarColor, initials, statusConfigFor } from "../conversationDisplay";
 import { ChatIcon, ChevronLeftIcon } from "../../../layouts/navIcons";
 import {
@@ -43,7 +43,7 @@ function fileNameFromUrl(url) {
   }
 }
 
-function MessageBubble({ message, currentUserId, onRetry }) {
+function MessageBubble({ message, onRetry }) {
   const isAgent = message.sender_type === "agent";
   const isImage = message.message_type === "image";
   const isFile = message.message_type === "file";
@@ -131,7 +131,6 @@ export function ConversationPanel({
   conversation,
   messages,
   isLoading,
-  currentUserId,
   onSendMessage,
   onRetryMessage,
   onSendAttachment,
@@ -164,6 +163,7 @@ export function ConversationPanel({
   }, [messages, isCustomerTyping]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMenuOpen(false);
   }, [conversation?.id]);
 
@@ -298,7 +298,7 @@ export function ConversationPanel({
             {conversation.customer_id ? (
               <button
                 type="button"
-                onClick={() => navigate(`/customers/${conversation.customer_id}`)}
+                onClick={() => navigate(`/customers/${conversation.customer_id}`, { state: { from: currentPath() } })}
                 className="m-0 text-sm font-black text-brand-navy hover:text-brand-primary hover:underline"
               >
                 {conversation.visitor_name}
@@ -396,18 +396,37 @@ export function ConversationPanel({
                     </button>
                   ) : null}
 
-                  <button
-                    type="button"
-                    disabled={isActionBusy}
-                    onClick={() => {
-                      setMenuOpen(false);
-                      onConvertToTicket?.();
-                    }}
-                    className="flex w-full items-center gap-2 px-3.5 py-2 text-right text-xs font-bold text-brand-navy transition hover:bg-brand-gray/6 disabled:opacity-50"
-                  >
-                    <TicketIcon className="size-4 text-brand-gray/60" />
-                    تحويل إلى تذكرة
-                  </button>
+                  {/* Assignment now auto-creates a ticket, so most
+                      conversations arrive here already ticketed - this
+                      action is the fallback for the bot-only ones. When a
+                      ticket exists we offer to open it instead, which also
+                      keeps the UI from inviting a duplicate. */}
+                  {conversation?.ticket ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate(`/tickets/${conversation.ticket.id}`, { state: { from: currentPath() } });
+                      }}
+                      className="flex w-full items-center gap-2 px-3.5 py-2 text-right text-xs font-bold text-brand-primary transition hover:bg-brand-gray/6"
+                    >
+                      <TicketIcon className="size-4 text-brand-primary/60" />
+                      فتح التذكرة {conversation.ticket.ticket_number}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={isActionBusy}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        onConvertToTicket?.();
+                      }}
+                      className="flex w-full items-center gap-2 px-3.5 py-2 text-right text-xs font-bold text-brand-navy transition hover:bg-brand-gray/6 disabled:opacity-50"
+                    >
+                      <TicketIcon className="size-4 text-brand-gray/60" />
+                      تحويل إلى تذكرة
+                    </button>
+                  )}
 
                   <div className="my-1 border-t border-brand-gray/10" />
 
@@ -486,7 +505,6 @@ export function ConversationPanel({
             <MessageBubble
               key={message.id}
               message={message}
-              currentUserId={currentUserId}
               onRetry={onRetryMessage}
             />
           ))
