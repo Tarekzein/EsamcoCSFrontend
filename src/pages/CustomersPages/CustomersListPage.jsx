@@ -15,7 +15,7 @@ import {
 import { conversationSelected } from '../../features/liveChat/liveChatSlice'
 import { avatarColor, initials } from '../../lib/avatarColor'
 import { MailIcon, PhoneIcon, UsersIcon } from '../../layouts/navIcons'
-import { navigate } from '../../router/navigation'
+import { currentPath, goBack, navigate } from '../../router/navigation'
 import { Pagination } from '../../components/Pagination'
 import { TableEmptyState } from '../../components/TableEmptyState'
 import { TableSkeletonRows } from '../../components/TableSkeletonRows'
@@ -155,19 +155,20 @@ export function CustomersListPage({ customerIdFromUrl }) {
   function openDetails(customer) {
     dispatch(customerSelected(customer))
     dispatch(loadCustomerTimeline(customer.id))
+    navigate(`/customers/${customer.id}`, { state: { from: currentPath() } })
   }
 
   function closeDetails() {
     dispatch(customerSelectionCleared())
-    if (customerIdFromUrl) navigate('/customers')
+    goBack('/customers')
   }
 
   function openConversation(conversationId) {
     dispatch(conversationSelected(conversationId))
-    navigate(`/live-chat/${conversationId}`)
+    navigate(`/live-chat/${conversationId}`, { state: { from: currentPath() } })
   }
 
-  if (customerIdFromUrl && !selected) {
+  if (customerIdFromUrl && String(selected?.id) !== String(customerIdFromUrl)) {
     return (
       <div dir="rtl" className="flex flex-col gap-4">
         <p className="m-0 rounded-lg border border-brand-gray/15 bg-white p-6 text-center text-sm font-bold text-brand-gray/60">
@@ -177,7 +178,7 @@ export function CustomersListPage({ customerIdFromUrl }) {
     )
   }
 
-  if (selected) {
+  if (customerIdFromUrl && String(selected?.id) === String(customerIdFromUrl)) {
     return (
       <div dir="rtl">
         <CustomerDetailView

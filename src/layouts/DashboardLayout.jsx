@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { loadCurrentUser, logoutUser, toggleOnlineStatus } from '../features/auth/authSlice'
 import { useLiveChatDepartmentChannel } from '../features/liveChat/useLiveChatDepartmentChannel'
+import { useTicketsChannel } from '../features/tickets/useTicketsChannel'
 import { navigate } from '../router/navigation'
 import { MenuIcon } from './navIcons'
 import { Sidebar } from './Sidebar'
@@ -55,6 +56,11 @@ export function DashboardLayout({ children, currentPath, pageTitle = 'Dashboard'
   const [isTogglingOnline, setTogglingOnline] = useState(false)
 
   useLiveChatDepartmentChannel(currentPath)
+
+  // Session-long, same rationale as the live-chat channel above: ticket
+  // events feed the dashboard counters and the list on every page, so this
+  // must be mounted here and nowhere else (a second mount double-fires).
+  useTicketsChannel()
 
   // Self-heals sessions whose cached user (from an older login, before a
   // field like department_id existed on the API) is missing data the app
